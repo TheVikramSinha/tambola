@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Free Tambola Ticket Generator & Caller | Vikram Kumar Sinha</title>
+    
+    <meta name="description" content="The best free tool to generate printable Tambola/Housie tickets and call numbers. Supports standard (1-90) and custom ranges. No login required.">
+    <meta name="keywords" content="
+        tambola ticket generator, housie ticket generator, free tambola tickets pdf, 
+        printable tambola tickets, random number caller, custom range tambola, 
+        fast housie game, office team building games, kitty party games, 
+        paperless tambola, indian bingo game, tambola master board, 
+        digital tambola caller, customizable housie, Vikram Sinha OTS
+    ">
+    
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Vikram Kumar Sinha">
+    <meta name="language" content="English">
+    <link rel="canonical" href="https://thevikramsinha.github.io/OTS/">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://thevikramsinha.github.io/OTS/">
+    <meta property="og:title" content="Office Tambola Suite - Custom Range Generator">
+    <meta property="og:description" content="Generate printable tickets for ANY number range. Perfect for quick office breaks. Free & Instant.">
+    <meta property="og:image" content="https://thevikramsinha.github.io/OTS/preview-image.jpg">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Office Tambola Suite (OTS)",
+      "url": "https://thevikramsinha.github.io/OTS/",
+      "author": {
+          "@type": "Person",
+          "name": "Vikram Kumar Sinha"
+      },
+      "genre": "Entertainment",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Web Browser",
+      "description": "A browser-based suite to generate unique Tambola/Housie tickets with customizable number ranges.",
+      "featureList": "Printable PDF Tickets, Custom Number Ranges, Random Number Caller, Strict Fair Logic, Live Leaderboard"
+    }
+    </script>
+
+    <style>
+        /* --- MODERN THEME VARIABLES --- */
+        :root { 
+            --primary: #4f46e5; /* Indigo 600 */
+            --primary-hover: #4338ca;
+            --accent: #ec4899; /* Pink 500 */
+            --bg: #f3f4f6; 
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-light: #6b7280;
+            --print-border: #000; 
+            --gold: #fbbf24;
+            --gold-dark: #b45309;
+        }
+
+        body { 
+            font-family: 'Inter', system-ui, -apple-system, sans-serif; 
+            background: var(--bg); 
+            background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+            background-size: 20px 20px;
+            margin: 0; 
+            padding: 40px 20px; 
+            color: var(--text-main);
+        }
+        
+        /* --- GLASSY CONTROLS CARD --- */
+        .controls { 
+            background: var(--card-bg); 
+            padding: 40px; 
+            border-radius: 16px; 
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); 
+            max-width: 700px; 
+            margin: 0 auto 40px auto; 
+            border: 1px solid rgba(255,255,255,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .controls::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        h2 { margin-top: 0; font-size: 28px; font-weight: 800; letter-spacing: -0.5px; }
+        .dev-tag { font-size: 14px; color: var(--text-light); margin-bottom: 30px; display: block; font-weight: 500; }
+        
+        /* --- INPUT GROUPS --- */
+        .input-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .input-wrapper { position: relative; }
+
+        label { 
+            display: block; 
+            font-size: 13px; 
+            font-weight: 700; 
+            color: var(--text-light); 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .input-box {
+            display: flex;
+            align-items: center;
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 0 12px;
+            transition: all 0.2s;
+        }
+
+        .input-box:focus-within {
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .input-icon { font-size: 18px; margin-right: 10px; opacity: 0.7; }
+
+        input[type="number"] { 
+            border: none; 
+            background: transparent; 
+            padding: 12px 0; 
+            width: 100%; 
+            font-size: 18px; 
+            font-weight: 600; 
+            color: var(--text-main);
+            outline: none; 
+        }
+
+        .range-badge {
+            grid-column: span 2;
+            background: #e0e7ff;
+            color: var(--primary);
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        /* --- BUTTONS --- */
+        .action-area { display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap; }
+
+        .btn { 
+            flex: 2;
+            background: linear-gradient(135deg, var(--primary), var(--primary-hover)); 
+            color: white; 
+            border: none; 
+            padding: 16px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-weight: 700; 
+            font-size: 16px; 
+            transition: transform 0.1s, box-shadow 0.2s; 
+            box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-width: 180px;
+        }
+
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.4); }
+        .btn:active { transform: translateY(0); }
+
+        .btn-outline { 
+            background: white; 
+            border: 2px solid #e5e7eb; 
+            color: var(--text-main); 
+            box-shadow: none;
+        }
+        .btn-outline:hover { 
+            border-color: var(--primary); 
+            color: var(--primary); 
+            background: #fefeff;
+        }
+        
+        .btn-secondary {
+            flex: 1;
+            background: #f0fdf4; /* Green tint */
+            color: #15803d;
+            border: 1px solid #bbf7d0;
+            min-width: 140px;
+            box-shadow: none;
+        }
+        .btn-secondary:hover { background: #dcfce7; transform: translateY(-2px); }
+
+        /* --- MODAL (Prize Calculator) --- */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 10000; 
+            left: 0; top: 0; 
+            width: 100%; height: 100%; 
+            background-color: rgba(0,0,0,0.5); 
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            padding: 30px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover { color: #000; }
+
+        .calc-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #f3f4f6;
+            font-size: 15px;
+        }
+        .calc-row:last-child { border-bottom: none; font-weight: bold; color: var(--primary); margin-top: 10px; }
+        .calc-label { color: var(--text-light); }
+        .calc-val { font-weight: 600; font-family: monospace; font-size: 16px; }
+
+        /* --- TICKET GRID --- */
+        #ticket-container { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 20px; 
+            max-width: 210mm; 
+            margin: 0 auto; 
+        }
+        .ticket { border: 2px solid var(--print-border); padding: 10px; background: white; break-inside: avoid; }
+        .ticket-header { text-align: center; font-size: 12px; margin-bottom: 5px; text-transform: uppercase; color: #555; }
+        .tambola-grid { display: grid; grid-template-columns: repeat(9, 1fr); border-top: 1px solid var(--print-border); border-left: 1px solid var(--print-border); }
+        .cell { border-right: 1px solid var(--print-border); border-bottom: 1px solid var(--print-border); height: 30px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; }
+        .empty { background: #eee; }
+
+        /* --- DEALER DASHBOARD & LEADERBOARD --- */
+        #dashboard { display: none; text-align: center; max-width: 900px; margin: 0 auto; }
+        
+        .call-display-area {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            position: relative; 
+            transition: all 0.3s ease;
+            cursor: pointer; 
+        }
+
+        .call-display-area:hover {
+            box-shadow: 0 25px 30px -5px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+        }
+        
+        .maximize-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            color: #9ca3af;
+            transition: color 0.2s;
+        }
+        .call-display-area:hover .maximize-icon { color: var(--primary); }
+        
+        .click-hint {
+            font-size: 13px;
+            color: #9ca3af;
+            font-weight: 500;
+            margin-top: -10px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        /* LIVE LEADERBOARD (Pills) */
+        #live-leaderboard {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+            padding: 10px 0;
+            border-top: 1px solid #f3f4f6;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .prize-pill {
+            background: white;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .prize-pill:hover { background: #e0e7ff; }
+
+        .prize-pill.won {
+            background: #fef3c7;
+            border-color: #d97706;
+            color: #92400e;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* FULLSCREEN ACTIVE STATE */
+        .call-display-area.fullscreen-active {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 9999;
+            border-radius: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: default;
+            background: white;
+        }
+
+        .big-number { 
+            font-size: 150px; 
+            font-weight: 900; 
+            color: var(--primary); 
+            margin: 10px 0; 
+            line-height: 1; 
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        
+        /* HIDE HINTS IN FULLSCREEN */
+        .call-display-area.fullscreen-active .maximize-icon,
+        .call-display-area.fullscreen-active .click-hint { display: none; }
+        
+        /* FULLSCREEN ADJUSTMENTS */
+        .call-display-area.fullscreen-active .big-number { 
+            font-size: 35vh; 
+            margin-bottom: 10px; /* Reduced to fit prizes */
+        }
+        
+        .call-display-area.fullscreen-active .btn {
+            width: auto !important; 
+            flex: 0 0 auto;
+            padding: 15px 40px;
+            font-size: 22px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            max-width: none;
+        }
+
+        /* Make pills larger in fullscreen */
+        .call-display-area.fullscreen-active #live-leaderboard {
+            gap: 15px;
+            margin-bottom: 30px;
+            border: none;
+        }
+
+        .call-display-area.fullscreen-active .prize-pill {
+            font-size: 18px;
+            padding: 10px 20px;
+            border-width: 3px;
+        }
+
+        .board { display: grid; grid-template-columns: repeat(10, 1fr); gap: 6px; margin-top: 20px; }
+        .board-num { padding: 8px; background: #e5e7eb; border-radius: 4px; color: #9ca3af; font-weight: 700; font-size: 14px; }
+        .board-num.active { background: var(--primary); color: white; transform: scale(1.1); box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .last-calls { font-size: 18px; color: var(--text-light); margin-bottom: 10px; font-weight: 500; }
+
+        /* --- PRINT OPTIMIZATION --- */
+        @media print {
+            body { background: white; padding: 0; background-image: none; }
+            .controls, #dashboard, .modal { display: none !important; }
+            #ticket-container { display: grid; grid-template-columns: 1fr 1fr; gap: 10mm; width: 100%; }
+            .ticket { border: 1px solid black; } 
+            .empty { background-color: #f0f0f0 !important; -webkit-print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="controls" id="config-panel">
+        <h2>Office Tambola Suite 🎲</h2>
+        <span class="dev-tag">Developed by Vikram Kumar Sinha</span>
+        
+        <div class="input-grid">
+            <div class="input-wrapper">
+                <label>Starting Number (Max 10)</label>
+                <div class="input-box">
+                    <span class="input-icon">🏁</span>
+                    <input type="number" id="startNum" value="1" min="1" max="10" oninput="updateRangeInfo()">
+                </div>
+            </div>
+            
+            <div class="input-wrapper">
+                <label>Tickets Needed</label>
+                <div class="input-box">
+                    <span class="input-icon">🎟️</span>
+                    <input type="number" id="ticketCount" value="30">
+                </div>
+            </div>
+
+            <div class="range-badge" id="rangeDisplay">
+                ⚡ Active Game Range: 1 - 90
+            </div>
+        </div>
+        
+        <div class="action-area">
+            <button class="btn" onclick="generateTickets()">
+                <span>🖨️</span> Generate Tickets
+            </button>
+            <button class="btn btn-outline" onclick="launchDashboard()">
+                <span>🖥️</span> Start Game
+            </button>
+            <button class="btn btn-secondary" onclick="openModal()">
+                <span>💰</span> Prize Calc
+            </button>
+        </div>
+
+        <div style="margin-top: 20px; text-align: center; font-size: 13px; color: #9ca3af;">
+            <span style="margin: 0 10px;">🔒 Strict 15 Numbers</span> • 
+            <span style="margin: 0 10px;">✨ 4 Corners Guaranteed</span>
+        </div>
+    </div>
+
+    <div id="prizeModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3 style="margin-top:0;">🏆 Prize Distributor</h3>
+            
+            <div class="input-wrapper" style="margin-bottom:20px;">
+                <label>Total Budget / Collection</label>
+                <div class="input-box">
+                    <span class="input-icon">₹</span>
+                    <input type="number" id="prizePoolInput" placeholder="Enter Amount (e.g. 1000)" oninput="calcPrizes()">
+                </div>
+            </div>
+
+            <div id="prizeBreakdown">
+                <div class="calc-row"><span class="calc-label">Full House (40%)</span> <span class="calc-val">0</span></div>
+                <div class="calc-row"><span class="calc-label">Top Line (15%)</span> <span class="calc-val">0</span></div>
+                <div class="calc-row"><span class="calc-label">Middle Line (15%)</span> <span class="calc-val">0</span></div>
+                <div class="calc-row"><span class="calc-label">Bottom Line (15%)</span> <span class="calc-val">0</span></div>
+                <div class="calc-row"><span class="calc-label">Early 5 (15%)</span> <span class="calc-val">0</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="ticket-container"></div>
+
+    <div id="dashboard">
+        <div style="max-width: 800px; margin: 0 auto; text-align: left; margin-bottom: 20px;">
+            <button class="btn btn-outline" style="width: auto; padding: 10px 20px;" onclick="closeDashboard()">← Back to Settings</button>
+        </div>
+
+        <div class="call-display-area" id="fullscreen-target" onclick="toggleFullScreen()">
+            
+            <div class="maximize-icon">⛶</div>
+            <div class="last-calls">Previous: <span id="prev-nums">-</span></div>
+            <div class="big-number" id="current-call">Start</div>
+            <span class="click-hint">(Click here for Full Screen TV Mode)</span>
+            
+            <div id="live-leaderboard">
+                </div>
+
+            <button class="btn" onclick="callNextNumber(event)" style="font-size: 20px; padding: 15px 40px; margin: 0 auto; max-width: 300px;">
+                CALL NEXT NUMBER 🎲
+            </button>
+            
+            <div style="margin-top:15px; color: #9ca3af; font-weight: 500;">
+                Remaining: <span id="remaining-count">0</span>
+            </div>
+        </div>
+
+        <div class="board" id="master-board"></div>
+    </div>
+
+    <script>
+        // --- GLOBAL STATE ---
+        let GAME_START = 1;
+        let GAME_END = 90; 
+        let availableNumbers = [];
+        let calledNumbers = [];
+        
+        // PRIZES STATE
+        let prizes = [
+            { name: "Early 5", winner: null },
+            { name: "Top Line", winner: null },
+            { name: "Mid Line", winner: null },
+            { name: "Bot Line", winner: null },
+            { name: "Full House", winner: null }
+        ];
+
+        function updateRangeInfo() {
+            let input = document.getElementById('startNum');
+            let s = parseInt(input.value) || 1;
+            if (s > 10) { s = 10; input.value = 10; }
+            if (s < 1) { s = 1; input.value = 1; }
+            const e = s + 89;
+            document.getElementById('rangeDisplay').innerHTML = `⚡ Active Game Range: <b>${s} - ${e}</b>`;
+        }
+
+        // --- PRIZE MODAL LOGIC ---
+        function openModal() { document.getElementById('prizeModal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('prizeModal').style.display = 'none'; }
+        window.onclick = function(event) { if (event.target == document.getElementById('prizeModal')) closeModal(); }
+
+        function calcPrizes() {
+            let total = parseInt(document.getElementById('prizePoolInput').value) || 0;
+            let fullHouse = Math.floor(total * 0.40);
+            let others = Math.floor(total * 0.15);
+            let remainder = total - (fullHouse + (others * 4));
+            fullHouse += remainder;
+
+            let html = `
+                <div class="calc-row"><span class="calc-label">Full House (40%)</span> <span class="calc-val">₹${fullHouse}</span></div>
+                <div class="calc-row"><span class="calc-label">Top Line (15%)</span> <span class="calc-val">₹${others}</span></div>
+                <div class="calc-row"><span class="calc-label">Middle Line (15%)</span> <span class="calc-val">₹${others}</span></div>
+                <div class="calc-row"><span class="calc-label">Bottom Line (15%)</span> <span class="calc-val">₹${others}</span></div>
+                <div class="calc-row"><span class="calc-label">Early 5 (15%)</span> <span class="calc-val">₹${others}</span></div>
+                <div class="calc-row" style="color:#000; margin-top:15px; border-top:1px dashed #ccc; padding-top:10px;">
+                    <span class="calc-label">Total Distributed</span> <span class="calc-val">₹${total}</span>
+                </div>
+            `;
+            document.getElementById('prizeBreakdown').innerHTML = html;
+        }
+
+        // --- LIVE LEADERBOARD LOGIC ---
+        function renderLeaderboard() {
+            const container = document.getElementById('live-leaderboard');
+            container.innerHTML = '';
+            
+            prizes.forEach((prize, index) => {
+                let div = document.createElement('div');
+                div.className = prize.winner ? 'prize-pill won' : 'prize-pill';
+                
+                let icon = prize.winner ? '🏆' : '○';
+                let text = prize.winner ? `${prize.name}: ${prize.winner}` : prize.name;
+                
+                div.innerHTML = `${icon} ${text}`;
+                
+                // Add Click Event
+                div.onclick = (e) => {
+                    e.stopPropagation(); // Stop Fullscreen Toggle
+                    handlePrizeClick(index);
+                };
+                container.appendChild(div);
+            });
+        }
+
+        function handlePrizeClick(index) {
+            const p = prizes[index];
+            if (p.winner) {
+                if(confirm(`Remove winner for ${p.name}?`)) {
+                    p.winner = null;
+                }
+            } else {
+                let name = prompt(`Who won ${p.name}?`);
+                if(name && name.trim() !== "") {
+                    p.winner = name.trim();
+                }
+            }
+            renderLeaderboard();
+        }
+
+        // --- FULLSCREEN LOGIC ---
+        function toggleFullScreen() {
+            const elem = document.getElementById('fullscreen-target');
+            if (!document.fullscreenElement) {
+                if (elem.requestFullscreen) {
+                    elem.requestFullscreen().then(() => { elem.classList.add('fullscreen-active'); });
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen().then(() => { elem.classList.remove('fullscreen-active'); });
+                }
+            }
+        }
+        document.addEventListener('fullscreenchange', () => {
+            const elem = document.getElementById('fullscreen-target');
+            if (!document.fullscreenElement) { elem.classList.remove('fullscreen-active'); }
+        });
+
+        // --- TICKET GENERATOR ---
+        function generateTickets() {
+            let input = document.getElementById('startNum');
+            let startVal = parseInt(input.value) || 1;
+            if (startVal > 10) { startVal = 10; input.value = 10; }
+            if (startVal < 1) { startVal = 1; input.value = 1; }
+
+            const count = parseInt(document.getElementById('ticketCount').value);
+            const container = document.getElementById('ticket-container');
+            container.innerHTML = ''; 
+
+            for(let i=0; i<count; i++) {
+                let validTicket = null;
+                while (!validTicket) {
+                    validTicket = createStrictTicket(startVal);
+                }
+                container.innerHTML += renderTicket(validTicket, i+1);
+            }
+            setTimeout(() => window.print(), 500);
+        }
+
+        function createStrictTicket(startNum) {
+            let grid = [[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0]];
+            let colCounts = [0,0,0,0,0,0,0,0,0];
+            let rowCounts = [0,0,0];
+
+            function getNumberForCol(colIdx) {
+                let offsetMin = colIdx * 10; 
+                let offsetMax = (colIdx * 10) + 9;
+                let randomOffset = Math.floor(Math.random() * (offsetMax - offsetMin + 1)) + offsetMin;
+                return startNum + randomOffset;
+            }
+
+            function place(r, c) {
+                let num = getNumberForCol(c);
+                while(grid[0][c] === num || grid[1][c] === num || grid[2][c] === num) {
+                    num = getNumberForCol(c);
+                }
+                grid[r][c] = num;
+                rowCounts[r]++;
+                colCounts[c]++;
+            }
+
+            // 1. Force 4 Corners
+            place(0, 0); place(0, 8); place(2, 0); place(2, 8);
+
+            // 2. Middle Columns
+            let middleCols = [1,2,3,4,5,6,7].sort(() => Math.random() - 0.5);
+            for (let c of middleCols) {
+                let placed = false, attempts = 0;
+                while(!placed && attempts < 15) {
+                    let r = Math.floor(Math.random() * 3);
+                    if (rowCounts[r] < 5) { place(r, c); placed = true; }
+                    attempts++;
+                }
+                if (!placed) return null;
+            }
+
+            // 3. Fill Remaining
+            let needed = 15 - 11;
+            for(let i=0; i<needed; i++) {
+                let placed = false, attempts = 0;
+                while(!placed && attempts < 50) {
+                    let c = Math.floor(Math.random() * 9);
+                    let r = Math.floor(Math.random() * 3);
+                    if (grid[r][c] === 0 && rowCounts[r] < 5 && colCounts[c] < 3) { place(r, c); placed = true; }
+                    attempts++;
+                }
+                if (!placed) return null;
+            }
+
+            // 4. Sort Columns
+            for(let c=0; c<9; c++) {
+                let nums = [];
+                if(grid[0][c] > 0) nums.push(grid[0][c]);
+                if(grid[1][c] > 0) nums.push(grid[1][c]);
+                if(grid[2][c] > 0) nums.push(grid[2][c]);
+                nums.sort((a,b) => a-b);
+                let idx = 0;
+                if(grid[0][c] > 0) grid[0][c] = nums[idx++];
+                if(grid[1][c] > 0) grid[1][c] = nums[idx++];
+                if(grid[2][c] > 0) grid[2][c] = nums[idx++];
+            }
+            return grid;
+        }
+
+        function renderTicket(grid, id) {
+            let html = `<div class="ticket"><div class="ticket-header">Ticket #${id}</div><div class="tambola-grid">`;
+            for(let r=0; r<3; r++) {
+                for(let c=0; c<9; c++) {
+                    let val = grid[r][c];
+                    let content = val === 0 ? '' : val;
+                    let cls = val === 0 ? 'cell empty' : 'cell';
+                    html += `<div class="${cls}">${content}</div>`;
+                }
+            }
+            html += `</div></div>`;
+            return html;
+        }
+
+        // --- DASHBOARD LOGIC ---
+        function launchDashboard() {
+            let input = document.getElementById('startNum');
+            GAME_START = parseInt(input.value) || 1;
+            if (GAME_START > 10) GAME_START = 10;
+            GAME_END = GAME_START + 89;
+            availableNumbers = [];
+            calledNumbers = [];
+            for(let i=GAME_START; i<=GAME_END; i++) availableNumbers.push(i);
+
+            // Reset Prizes
+            prizes.forEach(p => p.winner = null);
+
+            document.getElementById('config-panel').style.display = 'none';
+            document.getElementById('ticket-container').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            document.getElementById('remaining-count').innerText = availableNumbers.length;
+            document.getElementById('current-call').innerText = "Ready";
+            document.getElementById('prev-nums').innerText = "-";
+            
+            renderBoard();
+            renderLeaderboard();
+        }
+
+        function renderBoard() {
+            const board = document.getElementById('master-board');
+            board.innerHTML = '';
+            for(let i=GAME_START; i<=GAME_END; i++) {
+                let div = document.createElement('div');
+                div.className = 'board-num';
+                div.innerText = i;
+                if (calledNumbers.includes(i)) div.className += ' active';
+                board.appendChild(div);
+            }
+        }
+
+        function callNextNumber(event) {
+            if (event) event.stopPropagation(); // Stop fullscreen trigger
+            if(availableNumbers.length === 0) {
+                alert("Game Over! All numbers called.");
+                return;
+            }
+            const randomIndex = Math.floor(Math.random() * availableNumbers.length);
+            const num = availableNumbers[randomIndex];
+            availableNumbers.splice(randomIndex, 1);
+            calledNumbers.push(num);
+
+            document.getElementById('current-call').innerText = num;
+            document.getElementById('remaining-count').innerText = availableNumbers.length;
+            let recent = calledNumbers.slice(-4, -1).reverse();
+            document.getElementById('prev-nums').innerText = recent.join(', ');
+            renderBoard();
+        }
+
+        function closeDashboard() {
+            if(confirm("Exit game? Progress will be lost.")) {
+                document.getElementById('dashboard').style.display = 'none';
+                document.getElementById('config-panel').style.display = 'block';
+                document.getElementById('ticket-container').style.display = 'grid'; 
+            }
+        }
+    </script>
+</body>
+</html>
